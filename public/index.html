@@ -8,7 +8,49 @@
     <link rel="stylesheet" href="/screen.css">
   </head>
   <body>
-    <h1 class='hello-world'></h1>
+    <!-- NAVBAR -->
+    <navbar id="top-navbar">
+      <!-- <button onclick="getNasaImg()"></button>  -->
+      <h1 id="title">SDG Astro Lounge</h1>
+      <a>About</a>
+      <a>Contact Us</a>
+    </navbar>
+
+    <!-- NASA IMAGE -->
+    <div>
+      <img id="nasa-img"/>
+      <h1 id="img-text">Explore your universe.</h1>
+    </div>
+    
+
+    <!-- CONTENT -->
+    <div>
+      <navbar id="content-navbar">
+        <h2 class="content-navbar-text">Upcoming SpaceX Launches</h2>
+      </navbar>
+
+      <div id="launch-content">
+        <div id="card">
+        </div>
+      </div>
+
+      <input type="button" id="temp" onclick="getMissionData()" value="temp"></input>
+      <input type="button" id="next-page" onclick="nextCard()" value="Next Card"></input>
+      <input type="button" id="prev-page" onclick="prevCard()" value="Previous Card"></input>
+    </div>
+
+    <!-- CONTENT PART 2 -->
+    <div id="mission-statement">
+      <h1>Our Missions Statement</h1>
+      <p>Lorem Ipsum</p>
+    </div>
+    
+    <!-- FOOTER -->
+    <div id="footer-container">
+      
+    </div>
     <script src="/main.js" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+    <script src="https://sdg-astro-api.herokuapp.com/api/Nasa/apod" charset="utf-8"></script>
   </body>
 </html>
