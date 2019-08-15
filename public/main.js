@@ -5,11 +5,17 @@ const next = document.querySelector('#next-page')
 const prev = document.querySelector('#prev-page')
 
 class Mission {
-  constructor(name, details, timer, site) {
+  constructor(name, details, date, site, id, container, nameBox, detailsBox, dateBox, siteBox) {
     this.name = name
     this.details = details
-    this.timer = timer
+    this.date = date
     this.site = site
+    this.id = id
+    this.container = container
+    this.nameBox = nameBox
+    this.detailsBox = detailsBox
+    this.dateBox = dateBox
+    this.siteBox = siteBox
   }
 }
 
@@ -24,10 +30,42 @@ const getNasaImg = () => {
     })  
 }
 
+const dateTimer = () => {
+  setInterval(() => {
+    missions.map(mission => {
+      mission.dateBox.textContent = ''
+      if(mission.id == currMission + 1) {
+        const launchDate = new Date(mission.date
+          .split('')
+          .splice(0, 10)
+          .join(''))
+          .getTime()
+          
+        const now = new Date()
+          .getTime()
+        const remain = launchDate - now
+        const days = Math.floor(remain / (1000 * 60 * 60 * 24))
+        const hours = Math.floor((remain % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+        const minutes = Math.floor((remain % (1000 * 60 * 60)) / (1000 * 60))
+        const seconds = Math.floor((remain % (1000 * 60)) / 1000)
+  
+        mission.dateBox.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`
+      }
+    })
+  }, 1000)  
+}
+
 const getMissionData = () => {
+  let counter = 1
   axios.get(dataAPI)
     .then(res => {
       res.data.map(mission => {
+        const cardContainer = document.createElement('div')
+        const cardTitle = document.createElement('h4')
+        const cardDetails = document.createElement('p') 
+        const cardTimer = document.createElement('p')
+        const cardSite = document.createElement('p')
+        
         // mission title
         missionName = mission.mission_name
 
@@ -35,67 +73,63 @@ const getMissionData = () => {
         missionDetails = mission.details ? mission.details : 'No description available yet.'
 
         // mission timer
-        missionDate = mission.launch_date_local
+        missionDate = mission.launch_date_utc
 
         // mission launch site
         missionSite = mission.launch_site.site_name_long
 
-        let miss = new Mission(missionName, missionDetails, missionDate, missionSite)
+        let miss = new Mission(missionName, missionDetails, missionDate, missionSite, counter, cardContainer, cardTitle, cardDetails, cardTimer, cardSite)
         missions.push(miss)
+        counter++
       })
     })
-  displayMissionData()
+    .then(() => {
+      displayMissionData()
+    })
 }
 
 const displayMissionData = () => {
-  const cardContainer = document.querySelector('#card')
+  const mainContainer = document.querySelector('#container')
 
-  const cardContent = document.createElement('div')
-  const cardTitle = document.createElement('h4')
-  const cardDetails = document.createElement('p') 
-  const cardTimer = document.createElement('p')
-  const cardSite = document.createElement('p')
-  const separator = document.createElement('hr')
-  const separator2 = document.createElement('hr')
+  if (missions[currMission] !== undefined) {
+    const separator = document.createElement('hr')
+    const separator2 = document.createElement('hr')
+    mainContainer.textContent = ''
 
-  console.log(missions[0])
+    missions[currMission].container.id = 'card'
 
-  cardContainer.textContent = ''
+    missions[currMission].nameBox.textContent = missions[currMission].name
+    missions[currMission].nameBox.id = 'card-title'
 
-  cardTitle.textContent = missions[currMission].name
-  cardTitle.id = 'card-title'
+    missions[currMission].detailsBox.textContent = missions[currMission].details
+    missions[currMission].detailsBox.id = 'card-details'
+    missions[currMission].detailsBox.classList.add('all-text')
 
-  cardDetails.textContent = missions[currMission].details
-  cardDetails.id = 'card-details'
-  cardDetails.classList.add('all-text')
+    missions[currMission].dateBox.id = 'card-timer'
+    missions[currMission].dateBox.classList.add('all-text')
 
-  cardTimer.textContent = missions[currMission].timer
-  cardTimer.id = 'card-timer'
-  cardTimer.classList.add('all-text')
+    missions[currMission].siteBox.textContent = missions[currMission].site
+    missions[currMission].siteBox.id = 'card-site'
+    missions[currMission].siteBox.classList.add('all-text')
 
-  cardSite.textContent = missions[currMission].site
-  cardSite.id = 'card-site'
-  cardSite.classList.add('all-text')
+    separator.id = 'line-separator'
+    separator2.id = 'line-separator'
 
-  separator.id = 'line-separator'
-  separator2.id = 'line-separator'
+    missions[currMission].detailsBox.appendChild(separator)
+    missions[currMission].dateBox.appendChild(separator2)
 
-  cardContent.id = 'card-content'
+    missions[currMission].container.appendChild(missions[currMission].nameBox)
+    missions[currMission].container.appendChild(missions[currMission].detailsBox)
+    missions[currMission].container.appendChild(missions[currMission].dateBox)
+    missions[currMission].container.appendChild(missions[currMission].siteBox)
 
-  cardDetails.appendChild(separator)
-  cardTimer.appendChild(separator2)
-
-  cardContent.appendChild(cardDetails)
-  cardContent.appendChild(cardTimer)
-  cardContent.appendChild(cardSite)
-
-  cardContainer.appendChild(cardTitle)
-  cardContainer.appendChild(cardContent)
+    mainContainer.appendChild(missions[currMission].container)
+  } 
 }
 
 const prevCard = () => {
   if(currMission == 0) {
-    currMission = missions.length
+    currMission = missions.length - 1
   }
   else {
     currMission--
@@ -104,7 +138,7 @@ const prevCard = () => {
 }
 
 const nextCard = () => {
-  if (currMission == missions.length) {
+  if (currMission == missions.length - 1) {
     currMission = 0
   }
   else {
@@ -116,4 +150,5 @@ const nextCard = () => {
 window.onload = () => {
   getNasaImg()
   getMissionData()
+  dateTimer()
 }

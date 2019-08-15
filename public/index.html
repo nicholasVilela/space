@@ -12,14 +12,14 @@
     <navbar id="top-navbar">
       <!-- <button onclick="getNasaImg()"></button>  -->
       <h1 id="title">SDG Astro Lounge</h1>
-      <a>About</a>
-      <a>Contact Us</a>
+      <a id="other-navbar-text">About</a>
+      <a id="other-navbar-text" class="contact">Contact Us</a>
     </navbar>
 
     <!-- NASA IMAGE -->
     <div>
       <img id="nasa-img"/>
-      <h1 id="img-text">Explore your universe.</h1>
+      <!-- <h1 id="img-text">Explore your universe.</h1> -->
     </div>
     
 
@@ -29,25 +29,30 @@
         <h2 class="content-navbar-text">Upcoming SpaceX Launches</h2>
       </navbar>
 
-      <div id="launch-content">
-        <div id="card">
-        </div>
-      </div>
+      <div id="container"></div>
 
-      <input type="button" id="temp" onclick="getMissionData()" value="temp"></input>
+      <input type="button" id="temp" onclick="dateTimer()" value="temp"></input>
       <input type="button" id="next-page" onclick="nextCard()" value="Next Card"></input>
       <input type="button" id="prev-page" onclick="prevCard()" value="Previous Card"></input>
     </div>
 
     <!-- CONTENT PART 2 -->
     <div id="mission-statement">
-      <h1>Our Missions Statement</h1>
-      <p>Lorem Ipsum</p>
+      <h1 id="mission-statement-title">Our Mission Statement</h1>
+      <p id="statement">
+        Chuck Norris can slam a revolving door. Chuck Norris can have his cake and eat it, too. 
+        Chuck Norris is currently suing NBC, claiming Law and Order are trademarked names for his left 
+        and right legs Chuck Norris can slice meat so thin is only has one side, When Chuck Norris sends 
+        in his taxes, he sends blank forms and includes only a picture of himself, crouched and ready to 
+        attack.
+      </p>
     </div>
     
     <!-- FOOTER -->
     <div id="footer-container">
-      
+      <p id="footer-text">
+        made with 💛 at <span class="underline">SDG</span>
+      </p>
     </div>
     <script src="/main.js" charset="utf-8"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
