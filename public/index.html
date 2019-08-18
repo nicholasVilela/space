@@ -17,9 +17,14 @@
     </navbar>
 
     <!-- NASA IMAGE -->
+    
+
     <div>
       <img id="nasa-img"/>
       <!-- <h1 id="img-text">Explore your universe.</h1> -->
+      <p class="imgStuff" id="copyright"></p>
+      <p class="imgStuff" id="img-title"></p>
+      
     </div>
     
 
@@ -29,11 +34,11 @@
         <h2 class="content-navbar-text">Upcoming SpaceX Launches</h2>
       </navbar>
 
+      <i class="fas fa-angle-left next-border" id="next-page" onclick="prevCard()"></i>
+
       <div id="container"></div>
 
-      <input type="button" id="temp" onclick="dateTimer()" value="temp"></input>
-      <input type="button" id="next-page" onclick="nextCard()" value="Next Card"></input>
-      <input type="button" id="prev-page" onclick="prevCard()" value="Previous Card"></input>
+      <i class="fas fa-angle-right prev-border" id="prev-page" onclick="nextCard()"></i>
     </div>
 
     <!-- CONTENT PART 2 -->
@@ -57,5 +62,6 @@
     <script src="/main.js" charset="utf-8"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
     <script src="https://sdg-astro-api.herokuapp.com/api/Nasa/apod" charset="utf-8"></script>
+    <script src="https://kit.fontawesome.com/649c6156fa.js"></script>
   </body>
 </html>
