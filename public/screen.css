@@ -56,7 +56,9 @@ body {
   color: white; 
   display: flex;
   position: relative;
+  /* bottom: 13.5rem; */
   bottom: 13.5rem;
+  z-index: 2;
   justify-content: center;  
 }
 

@@ -30,7 +30,6 @@ const getNasaImg = () => {
 
       const copyright = document.querySelector('#copyright')
       const title = document.querySelector('#img-title')
-      console.log(res)
 
       copyright.textContent = `Copyright: ${res.data.copyright} | `
       title.textContent = `Title: ${res.data.title}`
@@ -42,7 +41,7 @@ const dateTimer = () => {
     missions.forEach(mission => {
       mission.timerBox.textContent = ''
       if(mission.id == currMission + 1) {
-        const launchDate = new Date(mission.date
+        const launchDate = new Date(mission.timer
           .split('')
           .splice(0, 10)
           .join(''))
@@ -56,13 +55,13 @@ const dateTimer = () => {
         const minutes = Math.floor((remain % (1000 * 60 * 60)) / (1000 * 60))
         const seconds = Math.floor((remain % (1000 * 60)) / 1000)
   
-        mission.dateBox.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`
+        mission.timerBox.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`
       }
     })
   }, 1000)  
 }
 
-const getMissionData = () => {
+const getMissionData = () => {  
   let counter = 1
   axios.get(dataAPI)
     .then(res => {
@@ -154,8 +153,15 @@ const nextCard = () => {
   displayMissionData()
 }
 
+const carousel = () => {
+  setInterval(() => {
+    nextCard()
+  }, 10000)
+}
+
 window.onload = () => {
   getNasaImg()
   getMissionData()
   dateTimer()
+  carousel()
 }
